@@ -1,0 +1,41 @@
+{
+  "name": "@baleada/source-transform-files-to-routes",
+  "version": "0.0.0",
+  "description": "Transform function, compatible with Baleada Source Transform, to replicate Nuxt/Next/Sapper functionality of generating routes based on file and directory structure",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepare": "node scripts/prepare.js",
+    "test": "npx ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/baleada/source-transform-files-to-routes.git"
+  },
+  "keywords": [
+    "baleada",
+    "files",
+    "pages",
+    "routes",
+    "vue router",
+    "react router"
+  ],
+  "author": {
+    "name": "Alex Vipond",
+    "email": "hello@alexvipond.dev",
+    "url": "https://alexvipond.dev"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/baleada/source-transform-files-to-routes/issues"
+  },
+  "homepage": "https://baleada.netlify.com",
+  "devDependencies": {
+    "@ava/babel": "^1.0.1",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "ava": "^3.5.1",
+    "rollup-plugin-babel": "^4.4.0"
+  }
+}
