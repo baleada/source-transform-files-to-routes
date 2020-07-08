@@ -39,5 +39,9 @@
     "ava": "^3.10.1",
     "core-js": "^3.6.5",
     "rollup-plugin-babel": "^4.4.0"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.10",
+    "nanoid-dictionary": "^3.0.0"
   }
 }

@@ -6,13 +6,15 @@ const absoluteStub = 'tests/stubs/files',
       paths = toPaths(absoluteStub) // Tested separately
 
 test('extracts metadata from paths', t => {
-  const value = toWithMetadata({
+  const withMetadata = toWithMetadata({
           pathToFiles: {
             absolute: absoluteStub,
             relativeFromRoutes: relativeFromRoutesStub,
           },
           paths
         }),
+        value = withMetadata.map(({ id, ...rest }) => rest),
+        ids = withMetadata.map(({ id }) => id),
         expected = [
           {
             name: 'baz',
@@ -40,5 +42,6 @@ test('extracts metadata from paths', t => {
           },
         ]
 
+  t.assert(ids.every(id => id.length === 21 && !/[^\w]/.test(id)))
   t.deepEqual(value, expected)
 })

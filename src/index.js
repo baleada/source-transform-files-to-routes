@@ -1,10 +1,11 @@
-import { toPaths, toWithMetadata, toFormattedRoute } from './util'
+import { toPaths, toWithMetadata, toImport, toRoute } from './util'
 
 export default function getTransform ({ router, pathToFiles }) {
   const { absolute } = pathToFiles,
         paths = toPaths(absolute),
         withMetadata = toWithMetadata({ pathToFiles, paths }),
-        withRouterFormatting = withMetadata.map(fileMetadata => toFormattedRoute({ fileMetadata, router })).join(',')
+        imports = withMetadata.map(toImport).join('\n') + '\n',
+        routes = withMetadata.map(fileMetadata => toRoute({ fileMetadata, router })).join(',')
   
-  return () => `export default [${withRouterFormatting}]`
+  return () => `${imports}export default [${routes}]`
 }
