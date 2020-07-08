@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Transform function, compatible with Baleada Source Transform, to replicate Nuxt/Next/Sapper functionality of generating routes based on file and directory structure",
   "main": "lib/index.js",
+  "module": "lib/index.esm.js",
   "scripts": {
     "prepare": "node scripts/prepare.js",
     "test": "npx ava"
