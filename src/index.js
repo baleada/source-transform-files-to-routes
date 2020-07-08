@@ -1,7 +1,7 @@
 import { readdirSync, lstatSync } from 'fs'
 
 export default function filesToRoutes ({ router, pathToFiles }) {
-  const { absolute, relativeFromRoutes } = pathToFiles,
+  const { absolute } = pathToFiles,
         paths = toPaths(absolute),
         withMetadata = toWithMetadata({ pathToFiles, paths }),
         withRouterFormatting = withMetadata.map(fileMetadata => toFormattedRoute({ fileMetadata, router })).join(',')
