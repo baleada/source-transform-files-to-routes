@@ -1,5 +1,5 @@
 import test from 'ava'
-import { toPaths, toWithMetadata } from '../src'
+import { toPaths, toWithMetadata } from '../src/util'
 
 const absoluteStub = 'tests/stubs/files',
       relativeFromRoutesStub = '../example/path',

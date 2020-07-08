@@ -1,5 +1,5 @@
 import test from 'ava'
-import { toPaths } from '../src'
+import { toPaths } from '../src/util'
 
 test('recurses through child folders', t => {
   const value = toPaths('tests/stubs/files'),

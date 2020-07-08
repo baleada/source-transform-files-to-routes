@@ -1,5 +1,5 @@
 import test from 'ava'
-import { toFormattedRoute } from '../src'
+import { toFormattedRoute } from '../src/util'
 
 const topLevelFileMetadataStub = {
         name: 'Baleada',
