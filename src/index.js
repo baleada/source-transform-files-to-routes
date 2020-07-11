@@ -5,13 +5,13 @@ export default function getTransform (router, options = {}) {
   const { include = ['*'], exclude = [] } = options
   
   return ({ id }) => {
-    const dir = id.replace(fileNameRegExp, '').replace(fileExtensionRegExp, ''),
+    const dir = id.replace(fileNameRegExp, '').replace(fileExtensionRegExp, '').replace(/\/$/, ''),
           paths = toPaths({ dir, include: resolveAsArray(include), exclude: [id, ...resolveAsArray(exclude)] }),
           metadata = toMetadata({ dir, paths }),
           imports = metadata.map(toImport).join('\n') + '\n',
           routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router })).join(',')
       
-    `${imports}export default [${routes}]`
+    return `${imports}export default [${routes}]`
   }
 }
 

@@ -6,6 +6,7 @@ export default {
     'fs',
     'nanoid',
     'nanoid-dictionary',
+    'minimatch',
   ],
   input: [
     'src/index.js',
