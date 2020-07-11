@@ -4,14 +4,11 @@ import { fileNameRegExp, fileExtensionRegExp } from '../constants'
 
 const nanoid = customAlphabet(`${lowercase}${uppercase}`, 21) // 21 is nanoid default
 
-export default function toWithMetadata ({ pathToFiles: { absolute, relativeFromRoutes }, paths }) {
+export default function toMetadata ({ dir, paths }) {
   return paths.map(path => ({
     name: path.match(fileNameRegExp)[1],
-    extension: path.match(fileExtensionRegExp)[2],
+    extension: path.match(fileExtensionRegExp)[1],
+    relativePathFromIndex: '.' + path.replace(dir, '').replace(fileNameRegExp, '').replace(fileExtensionRegExp, ''),
     id: nanoid(),
-    path: {
-      relativeFromFiles: path.replace(absolute, '').replace(fileNameRegExp, '').replace(fileExtensionRegExp, ''),
-      relativeFromRoutes,
-    },
   }))
 }

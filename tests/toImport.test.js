@@ -4,14 +4,14 @@ import { topLevel, nested } from './stubs/fileMetadata.js'
 
 test('formats top-level Vue routes', t => {
   const value = toImport(topLevel),
-        expected = "import ABC from '../components/Baleada.js'"
+        expected = "import ABC from './Baleada.js'"
 
   t.is(value, expected)
 })
 
 test('formats nested Vue routes', t => {
   const value = toImport(nested),
-        expected = "import ABC from '../components/nested/Baleada.js'"
+        expected = "import ABC from './nested/Baleada.js'"
 
   t.is(value, expected)
 })

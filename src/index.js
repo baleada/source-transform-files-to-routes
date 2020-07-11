@@ -1,11 +1,20 @@
-import { toPaths, toWithMetadata, toImport, toRoute } from './util'
+import { fileNameRegExp, fileExtensionRegExp } from './constants'
+import { toPaths, toMetadata, toImport, toRoute } from './util'
 
-export default function getTransform ({ router, pathToFiles }) {
-  const { absolute } = pathToFiles,
-        paths = toPaths(absolute),
-        withMetadata = toWithMetadata({ pathToFiles, paths }),
-        imports = withMetadata.map(toImport).join('\n') + '\n',
-        routes = withMetadata.map(fileMetadata => toRoute({ fileMetadata, router })).join(',')
+export default function getTransform (router, options = {}) {
+  const { include = ['*'], exclude = [] } = options
   
-  return () => `${imports}export default [${routes}]`
+  return ({ id }) => {
+    const dir = id.replace(fileNameRegExp, '').replace(fileExtensionRegExp, ''),
+          paths = toPaths({ dir, include: resolveAsArray(include), exclude: [id, ...resolveAsArray(exclude)] }),
+          metadata = toMetadata({ dir, paths }),
+          imports = metadata.map(toImport).join('\n') + '\n',
+          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router })).join(',')
+      
+    `${imports}export default [${routes}]`
+  }
+}
+
+function resolveAsArray (stringOrArray) {
+  return Array.isArray(stringOrArray) ? stringOrArray : [stringOrArray]
 }
