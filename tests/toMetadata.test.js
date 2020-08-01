@@ -2,7 +2,7 @@ import test from 'ava'
 import { toPaths, toMetadata } from '../src/util'
 
 const dirStub = 'tests/stubs/files',
-      paths = toPaths({ dir: dirStub, include: ['*'], exclude: [] }) // Tested separately
+      paths = toPaths({ dir: dirStub, test: ({ id, createFilter }) => createFilter('**', '**/.**') }) // Tested separately
 
 test('extracts metadata from paths', t => {
   const metadata = toMetadata({

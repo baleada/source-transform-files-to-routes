@@ -2,11 +2,12 @@ import { fileNameRegExp, fileExtensionRegExp } from './constants'
 import { toPaths, toMetadata, toImport, toRoute } from './util'
 
 export default function getTransform (router, options = {}) {
-  const { include = ['*'], exclude = [] } = options
+  const { include = '**', exclude = '**/.**', test: rawTest } = options,
+        test = resolveTest(include, exclude, rawTest)
   
   return ({ id }) => {
     const dir = id.replace(fileNameRegExp, '').replace(fileExtensionRegExp, '').replace(/\/$/, ''),
-          paths = toPaths({ dir, include: resolveAsArray(include), exclude: [id, ...resolveAsArray(exclude)] }),
+          paths = toPaths({ dir, test }),
           metadata = toMetadata({ dir, paths }),
           imports = metadata.map(toImport).join('\n') + '\n',
           routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router })).join(',')
@@ -15,6 +16,8 @@ export default function getTransform (router, options = {}) {
   }
 }
 
-function resolveAsArray (stringOrArray) {
-  return Array.isArray(stringOrArray) ? stringOrArray : [stringOrArray]
+function resolveTest (include, exclude, test) {
+  return typeof test === 'function'
+    ? test
+    : ({ id, createFilter }) => createFilter(include, exclude)(id)
 }

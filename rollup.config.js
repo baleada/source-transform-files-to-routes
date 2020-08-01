@@ -4,9 +4,10 @@ import resolve from '@rollup/plugin-node-resolve'
 export default {
   external: [
     'fs',
+    'path',
+    '@rollup/pluginutils',
     'nanoid',
     'nanoid-dictionary',
-    'minimatch',
   ],
   input: [
     'src/index.js',
