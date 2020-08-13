@@ -2,7 +2,7 @@ import { fileNameRegExp, fileExtensionRegExp } from './constants'
 import { toPaths, toMetadata, toImport, toRoute } from './util'
 
 export default function getTransform (router, options = {}) {
-  const { include = '**', exclude = '**/.**', test: rawTest } = options,
+  const { include = '**', exclude = '**/.**', test: rawTest, pathPrefix = '' } = options,
         test = resolveTest(include, exclude, rawTest)
   
   return ({ id }) => {
@@ -10,7 +10,7 @@ export default function getTransform (router, options = {}) {
           paths = toPaths({ dir, test }),
           metadata = toMetadata({ dir, paths }),
           imports = metadata.map(toImport).join('\n') + '\n',
-          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router })).join(',')
+          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router, pathPrefix })).join(',')
       
     return `${imports}export default [${routes}]`
   }
