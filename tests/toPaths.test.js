@@ -1,10 +1,12 @@
 import test from 'ava'
 import { toPaths } from '../src/util'
+import { resolve } from 'path'
 
-const defaultTest = ({ id, createFilter }) => createFilter('**', '**/.**')(id)
+const basePath = resolve(''),
+      defaultTest = ({ id, createFilter }) => createFilter('**', '**/.**')(id)
 
 test('recurses through child folders', t => {
-  const value = toPaths({ dir: 'tests/stubs/files', test: defaultTest }),
+  const value = toPaths({ dir: `${basePath}/tests/stubs/files`, test: defaultTest }),
         expected = [
           'tests/stubs/files/bar/baz.md',
           'tests/stubs/files/bar/qux/poop.vue',
