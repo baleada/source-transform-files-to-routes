@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/baleada/source-transform-files-to-routes.git"
+    "url": "git+https://github.com/baleada/source-transform-files-to-routes.git"
   },
   "keywords": [
     "baleada",
@@ -27,7 +27,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/baleada/source-transform-files-to-routes/issues"
+    "url": "https://github.com/baleada/source-transform-files-to-routes/issues"
   },
   "homepage": "https://baleada.netlify.com",
   "devDependencies": {
@@ -44,5 +44,8 @@
     "@rollup/pluginutils": "^3.1.0",
     "nanoid": "^3.1.10",
     "nanoid-dictionary": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@baleada/logic": ">=0.15.19"
   }
 }

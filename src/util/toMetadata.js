@@ -1,21 +1,36 @@
 import { parse, resolve } from 'path'
+import { clipable } from '@baleada/logic'
 import { customAlphabet } from 'nanoid'
 import { lowercase, uppercase } from 'nanoid-dictionary'
 
 const nanoid = customAlphabet(`${lowercase}${uppercase}`, 21) // 21 is nanoid default
 
-export default function toMetadata ({ dir, paths }) {
-  const basePath = resolve(''),
-        relativePathFromRoot = dir.replace(basePath, '').replace(/^\//, '')
-        
-  return paths.map(path => {
-    const { name, ext } = parse(path)
+export default function toMetadata ({ filesDir, ids }) {
+  return ids.map(id => {
+    const { name, ext } = parse(id),
+          fileRE = new RegExp(`${name}${ext}$`),
+          basePath = resolve(''),
+          relativeFromRoot = clipable(id)
+            .clip(basePath)
+            .clip(fileRE)
+            .toString(),
+          relativeFromIndex = '.' + clipable(id)
+            .clip(filesDir)
+            .clip(fileRE)
+            .toString(),
+          absolute = clipable(id)
+            .clip(fileRE)
+            .toString()
 
     return {
       name,
-      extension: ext.replace(/^\./, ''),
-      relativePathFromIndex: '.' + path.replace(relativePathFromRoot, '').replace(name, '').replace(ext, ''),
-      id: nanoid(),
+      extension: clipable(ext).clip(/^\./).toString(),
+      path: {
+        relativeFromRoot,
+        relativeFromIndex,
+        absolute,
+      },
+      id: nanoid()
     }
   })
 }

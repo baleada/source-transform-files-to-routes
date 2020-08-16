@@ -1,16 +1,15 @@
-import { fileNameRegExp, fileExtensionRegExp } from './constants'
-import { toPaths, toMetadata, toImport, toRoute } from './util'
+import { toFilesDir, toIds, toMetadata, toImport, toRoute } from './util'
 
 export default function getTransform (router, options = {}) {
-  const { include = '**', exclude = '**/.**', test: rawTest, pathPrefix = '' } = options,
+  const { include = '**', exclude = '**/.**', test: rawTest, routePathPrefix = '', importType = 'relativeFromIndex' } = options,
         test = resolveTest(include, exclude, rawTest)
   
   return ({ id }) => {
-    const dir = id.replace(fileNameRegExp, '').replace(fileExtensionRegExp, '').replace(/\/$/, ''),
-          paths = toPaths({ dir, test }),
-          metadata = toMetadata({ dir, paths }),
-          imports = metadata.map(toImport).join('\n') + '\n',
-          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router, pathPrefix })).join(',')
+    const filesDir = toFilesDir(id),
+          ids = toIds({ filesDir, test }),
+          metadata = toMetadata({ filesDir, ids }),
+          imports = metadata.map(fileMetadata => toImport({ fileMetadata, importType })).join('\n') + '\n',
+          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router, routePathPrefix })).join(',')
       
     return `${imports}export default [${routes}]`
   }

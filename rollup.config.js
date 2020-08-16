@@ -8,6 +8,7 @@ export default {
     '@rollup/pluginutils',
     'nanoid',
     'nanoid-dictionary',
+    '@baleada/logic',
   ],
   input: [
     'src/index.js',
