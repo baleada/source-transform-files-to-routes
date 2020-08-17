@@ -1,7 +1,7 @@
 import { toFilesDir, toIds, toMetadata, toImport, toRoute } from './util'
 
 export default function getTransform (router, options = {}) {
-  const { include = '**', exclude = '**/.**', test: rawTest, routePathPrefix = '', importType = 'relativeFromIndex' } = options,
+  const { include = '**', exclude = '**/.**', test: rawTest, routePathPrefix = '', importType = 'absolute' } = options,
         test = resolveTest(include, exclude, rawTest)
   
   return ({ id }) => {
