@@ -1,7 +1,7 @@
 import { toFilesDir, toIds, toMetadata, toImport, toRoute } from './util'
 
 export default function getTransform (router, options = {}) {
-  const { include = '**', exclude = '**/.**', test: rawTest, transformRoute = route => route, importType = 'absolute' } = options,
+  const { include = '**', exclude = '**/.**', test: rawTest, transformPath = path => path, importType = 'absolute' } = options,
         test = resolveTest(include, exclude, rawTest)
   
   return ({ id }) => {
@@ -9,7 +9,7 @@ export default function getTransform (router, options = {}) {
           ids = toIds({ filesDir, test }),
           metadata = toMetadata({ filesDir, ids }),
           imports = metadata.map(fileMetadata => toImport({ fileMetadata, importType })).join('\n') + '\n',
-          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router, transformRoute })).join(',')
+          routes = metadata.map(fileMetadata => toRoute({ fileMetadata, router, transformPath })).join(',')
       
     return `${imports}export default [${routes}]`
   }
