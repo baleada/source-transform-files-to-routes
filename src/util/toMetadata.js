@@ -1,5 +1,4 @@
 import { parse, resolve } from 'path'
-import { clipable } from '@baleada/logic'
 import { customAlphabet } from 'nanoid'
 import { lowercase, uppercase } from 'nanoid-dictionary'
 
@@ -10,21 +9,20 @@ export default function toMetadata ({ filesDir, ids }) {
     const { name, ext } = parse(id),
           fileRE = new RegExp(`${name}${ext}$`),
           basePath = resolve(''),
-          relativeFromRoot = clipable(id)
-            .clip(basePath)
-            .clip(fileRE)
-            .toString(),
-          relativeFromIndex = '.' + clipable(id)
-            .clip(filesDir)
-            .clip(fileRE)
-            .toString(),
-          absolute = clipable(id)
-            .clip(fileRE)
-            .toString()
+          relativeFromRoot = id
+            .replace(basePath, '')
+            .replace(fileRE, ''),
+          relativeFromIndex = '.' + id
+            .replace(filesDir, '')
+            .replace(fileRE, ''),
+          absolute = (() => {
+            const withoutFile = id.replace(fileRE, '')
+            return withoutFile.startsWith(basePath) ? withoutFile : `${basePath}/${withoutFile}`
+          })()
 
     return {
       name,
-      extension: clipable(ext).clip(/^\./).toString(),
+      extension: ext.replace(/^\./, ''),
       path: {
         relativeFromRoot,
         relativeFromIndex,

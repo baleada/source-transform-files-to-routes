@@ -1,8 +1,6 @@
-import { clipable } from '@baleada/logic'
-
 const toRouteByRouter = {
-  vue: ({ fileMetadata: { name, id, path: { relativeFromIndex } }, transformPath }) => `{ path: '${transformPath(clipable(relativeFromIndex).clip(/^\./) + name)}', component: ${id} }`,
-  react: ({ fileMetadata: { name, id, path: { relativeFromIndex } }, transformPath }) => `{ path: '${transformPath(clipable(relativeFromIndex).clip(/^\./) + name)}', component: ${id} }`
+  vue: ({ fileMetadata: { name, id, path: { relativeFromIndex } }, transformPath }) => `{ path: '${transformPath(relativeFromIndex.replace(/^\./, '') + name)}', component: ${id} }`,
+  react: ({ fileMetadata: { name, id, path: { relativeFromIndex } }, transformPath }) => `{ path: '${transformPath(relativeFromIndex.replace(/^\./, '') + name)}', component: ${id} }`
 }
 
 export default function toRoute({ fileMetadata, router, transformPath }) {

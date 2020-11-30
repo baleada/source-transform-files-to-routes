@@ -2,10 +2,15 @@
   "name": "@baleada/source-transform-files-to-routes",
   "version": "0.4.2",
   "description": "Transform function, compatible with Baleada Source Transform, to replicate Nuxt/Next/Sapper functionality of generating routes based on file and directory structure",
-  "main": "lib/index.js",
-  "module": "lib/index.esm.js",
+  "type": "module",
+  "main": "lib/index.cjs",
+  "module": "lib/index.js",
+  "exports": {
+    "require": "./lib/index.cjs",
+    "import": "./lib/index.js"
+  },
   "scripts": {
-    "prepare": "node scripts/prepare.js",
+    "prepare": "rollup --config rollup.config.js",
     "test": "npx ava"
   },
   "repository": {
@@ -31,21 +36,14 @@
   },
   "homepage": "https://baleada.netlify.com",
   "devDependencies": {
-    "@ava/babel": "^1.0.1",
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.10.4",
-    "@babel/preset-env": "^7.7.1",
-    "@rollup/plugin-node-resolve": "^7.1.1",
-    "ava": "^3.10.1",
-    "core-js": "^3.6.5",
-    "rollup-plugin-babel": "^4.4.0"
+    "@baleada/prepare": "^0.3.4",
+    "rollup": "^2.33.3",
+    "uvu": "^0.5.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "@rollup/pluginutils": "^3.1.0",
     "nanoid": "^3.1.10",
     "nanoid-dictionary": "^3.0.0"
-  },
-  "peerDependencies": {
-    "@baleada/logic": ">=0.15.19"
   }
 }
