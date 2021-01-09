@@ -1,11 +1,13 @@
 import { toFilesDir, toIds, toMetadata, toImport, toRoute } from './util'
+import { resolve } from 'path'
 
-export default function getTransform (router, options = {}) {
+export default function createTransform (router, options = {}) {
   const { include = '**', exclude = '**/.**', test: rawTest, transformPath = path => path, importType = 'absolute' } = options,
         test = resolveTest(include, exclude, rawTest)
   
-  return ({ id }) => {
-    const filesDir = toFilesDir(id),
+  return ({ id: rawId }) => {
+    const id = rawId.startsWith(basePath) ? rawId : `${basePath}/${rawId.replace(/^\//, '')}`,
+          filesDir = toFilesDir(id),
           ids = toIds({ filesDir, test }),
           metadata = toMetadata({ filesDir, ids }),
           imports = metadata.map(fileMetadata => toImport({ fileMetadata, importType })).join('\n') + '\n',
@@ -20,3 +22,5 @@ function resolveTest (include, exclude, test) {
     ? test
     : ({ id, createFilter }) => createFilter(include, exclude)(id)
 }
+
+const basePath = resolve('')
