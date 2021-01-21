@@ -1,18 +1,21 @@
-export default function toImport ({ fileMetadata, importType }) {
+export default function toImport ({ fileMetadata, importType, importPath }) {
   const { name, extension, path: { relativeFromRoot, relativeFromIndex, absolute }, id } = fileMetadata
 
-  let dir
+  const dir = (() => {
+          switch (importPath) {
+            case 'absolute':
+              return absolute
+            case 'relativeFromIndex':
+              return relativeFromIndex
+            case 'relativeFromRoot':
+              return relativeFromRoot
+            }
+        })()
+  
   switch (importType) {
-  case 'absolute':
-    dir = absolute
-    break
-  case 'relativeFromIndex':
-    dir = relativeFromIndex
-    break
-  case 'relativeFromRoot':
-    dir = relativeFromRoot
-    break
+    case 'dynamic':
+      return `const ${id} = import('${dir}${name}.${extension}')`
+    case 'static':
+      return `import ${id} from '${dir}${name}.${extension}'`
   }
-
-  return `import ${id} from '${dir}${name}.${extension}'`
 }
