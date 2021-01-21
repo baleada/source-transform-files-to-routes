@@ -1,6 +1,6 @@
 {
   "name": "@baleada/source-transform-files-to-routes",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Transform function, compatible with Baleada Source Transform, to replicate Nuxt/Next/Sapper functionality of generating routes based on file and directory structure",
   "type": "module",
   "main": "lib/index.cjs",
