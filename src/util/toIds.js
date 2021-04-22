@@ -7,7 +7,7 @@ export default function toIds ({ filesDir, test }) {
     .filter(item => {
       return (
         !isFile({ dir: filesDir, item }) ||
-        test({ source: readFileSync(`${filesDir}/${item}`, 'utf8'), id: `${filesDir}/${item}`, createFilter })
+        test({ source: () => readFileSync(`${filesDir}/${item}`, 'utf8'), id: `${filesDir}/${item}`, createFilter })
       )
     })
     .reduce((files, item) => {
